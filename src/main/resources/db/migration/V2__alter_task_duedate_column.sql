@@ -1,0 +1,1 @@
+ALTER TABLE task CHANGE COLUMN dueDate due_date DATE;

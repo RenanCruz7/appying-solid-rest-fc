@@ -10,7 +10,7 @@ import task.manajer.dto.CreateTaskDTO;
 
 import java.util.Date;
 
-@Table(name = "tasks")
+@Table(name = "task")
 @Entity(name = "task")
 @Getter
 @Setter
@@ -26,6 +26,7 @@ public class Task {
     @Min(1)
     @Max(3)
     private int priority;
+    @Column(name = "due_date")
     private Date dueDate;
 
     public Task(CreateTaskDTO data) {
