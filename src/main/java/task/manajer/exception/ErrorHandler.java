@@ -40,6 +40,11 @@ public class ErrorHandler {
         return ResponseEntity.internalServerError()
                 .body(new ErrorResponse(500, "Internal server error"));
     }
+    @ExceptionHandler(InvalidPriorityException.class)
+    public ResponseEntity<ErrorResponse> handleInvalidPriority(InvalidPriorityException ex) {
+        return ResponseEntity.badRequest()
+                .body(new ErrorResponse(400, ex.getMessage()));
+    }
 
     private record ValidationErrorData(
             String field,

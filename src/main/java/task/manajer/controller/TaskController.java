@@ -1,6 +1,7 @@
 package task.manajer.controller;
 
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class TaskController {
 
     @PostMapping()
     @Transactional
-    public ResponseEntity createTask(@RequestBody CreateTaskDTO data, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity createTask(@RequestBody @Valid CreateTaskDTO data, UriComponentsBuilder uriBuilder) {
         Task task = taskService.createTask(data);
         var uri = uriBuilder.path("/tasks/{id}").buildAndExpand(task.getId()).toUri();
         return ResponseEntity.created(uri).body(task);
