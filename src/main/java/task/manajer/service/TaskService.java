@@ -1,9 +1,11 @@
 package task.manajer.service;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import task.manajer.domain.Task;
 import task.manajer.dto.CreateTaskDTO;
+import task.manajer.dto.PatchTaskDTO;
 import task.manajer.repository.TaskRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,5 +24,29 @@ public class TaskService {
 
     public Page<Task> getAll(Pageable pageable) {
         return taskRepository.findAll(pageable);
+    }
+
+    public Task getById(Long id) {
+        return taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
+    }
+
+    public Task updateTask(Long id, @Valid PatchTaskDTO data) {
+        Task task = getById(id);
+        if (data.name() != null) {
+            task.setName(data.name());
+        }
+        if (data.description() != null) {
+            task.setDescription(data.description());
+        }
+        if (data.priority() != null) {
+            task.setPriority(data.priority());
+        }
+        if (data.status() != null) {
+            task.setStatus(data.status());
+        }
+        if (data.dueDate() != null) {
+            task.setDueDate(data.dueDate());
+        }
+        return taskRepository.save(task);
     }
 }

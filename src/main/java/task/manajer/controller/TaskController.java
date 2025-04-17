@@ -12,6 +12,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import task.manajer.domain.Task;
 import task.manajer.dto.CreateTaskDTO;
 import task.manajer.dto.DetailsTaskDTO;
+import task.manajer.dto.PatchTaskDTO;
 import task.manajer.service.TaskService;
 
 
@@ -35,4 +36,19 @@ public class TaskController {
         var tasks = taskService.getAll(pageable);
         return ResponseEntity.ok(tasks);
     }
+
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DetailsTaskDTO> getTaskById(@PathVariable Long id) {
+        Task task = taskService.getById(id);
+        return ResponseEntity.ok(new DetailsTaskDTO(task));
+    }
+
+    @PutMapping("/{id}")
+    @Transactional
+    public ResponseEntity<DetailsTaskDTO> updateTask(@PathVariable Long id, @RequestBody @Valid PatchTaskDTO data) {
+        Task task = taskService.updateTask(id, data);
+        return ResponseEntity.ok(new DetailsTaskDTO(task));
+    }
+
 }
