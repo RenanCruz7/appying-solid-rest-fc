@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 import task.manajer.domain.Task;
+import task.manajer.domain.TaskStatus;
 import task.manajer.dto.CreateTaskDTO;
 import task.manajer.dto.DetailsTaskDTO;
 import task.manajer.dto.PatchTaskDTO;
@@ -34,6 +35,13 @@ public class TaskController {
     @GetMapping
     public ResponseEntity<Page<Task>> getAllTasks(@PageableDefault(size = 10,sort = {"dueDate"}) Pageable pageable) {
         var tasks = taskService.getAll(pageable);
+        return ResponseEntity.ok(tasks);
+    }
+    @GetMapping("/status/{status}")
+    public ResponseEntity<Page<Task>> getTasksByStatus(
+            @PathVariable TaskStatus status,
+            @PageableDefault(size = 10, sort = {"dueDate"}) Pageable pageable) {
+        var tasks = taskService.findByStatus(status, pageable);
         return ResponseEntity.ok(tasks);
     }
 

@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import task.manajer.domain.Task;
+import task.manajer.domain.TaskStatus;
 import task.manajer.dto.CreateTaskDTO;
 import task.manajer.dto.PatchTaskDTO;
 import task.manajer.repository.TaskRepository;
@@ -28,6 +29,9 @@ public class TaskService {
 
     public Task getById(Long id) {
         return taskRepository.findById(id).orElseThrow(() -> new RuntimeException("Task not found"));
+    }
+    public Page<Task> findByStatus(TaskStatus status, Pageable pageable) {
+        return taskRepository.findByStatus(status, pageable);
     }
 
     public Task updateTask(Long id, @Valid PatchTaskDTO data) {
