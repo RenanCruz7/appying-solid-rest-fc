@@ -53,4 +53,9 @@ public class TaskService {
         }
         return taskRepository.save(task);
     }
+
+    public Page<Task> findByPriorityBetween(int min, int max, Pageable pageable ) {
+        return taskRepository.findByPriorityBetween(min, max, pageable);
+    }
+
 }

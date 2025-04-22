@@ -59,4 +59,17 @@ public class TaskController {
         return ResponseEntity.ok(new DetailsTaskDTO(task));
     }
 
+    @GetMapping("/priority/{min}/{max}")
+    public ResponseEntity<Page<Task>> getTasksByPriorityRange(
+            @PathVariable Integer min,
+            @PathVariable Integer max,
+            @PageableDefault(size = 10, sort = {"priority"}) Pageable pageable
+    ) {
+        if (min > max) {
+            return ResponseEntity.badRequest().build();
+        }
+        var tasks = taskService.findByPriorityBetween(min, max, pageable);
+        return ResponseEntity.ok(tasks);
+    }
+
 }
