@@ -14,6 +14,7 @@ import task.manajer.domain.TaskStatus;
 import task.manajer.dto.CreateTaskDTO;
 import task.manajer.dto.DetailsTaskDTO;
 import task.manajer.dto.PatchTaskDTO;
+import task.manajer.dto.TaskStatsDTO;
 import task.manajer.service.TaskService;
 
 
@@ -71,5 +72,20 @@ public class TaskController {
         var tasks = taskService.findByPriorityBetween(min, max, pageable);
         return ResponseEntity.ok(tasks);
     }
+
+    @GetMapping("/stats")
+    public ResponseEntity<TaskStatsDTO> getTaskStats() {
+        return ResponseEntity.ok(taskService.getTaskStats());
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<Page<Task>> searchTasksByName(
+            @RequestParam String name,
+            @PageableDefault(size = 10, sort = {"dueDate"}) Pageable pageable
+    ) {
+        var tasks = taskService.findByNameContaining(name, pageable);
+        return ResponseEntity.ok(tasks);
+    }
+
 
 }

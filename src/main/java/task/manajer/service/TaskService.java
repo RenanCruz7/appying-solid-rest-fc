@@ -7,6 +7,7 @@ import task.manajer.domain.Task;
 import task.manajer.domain.TaskStatus;
 import task.manajer.dto.CreateTaskDTO;
 import task.manajer.dto.PatchTaskDTO;
+import task.manajer.dto.TaskStatsDTO;
 import task.manajer.repository.TaskRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -56,6 +57,19 @@ public class TaskService {
 
     public Page<Task> findByPriorityBetween(int min, int max, Pageable pageable ) {
         return taskRepository.findByPriorityBetween(min, max, pageable);
+    }
+
+    public TaskStatsDTO getTaskStats() {
+        return new TaskStatsDTO(
+                taskRepository.countByStatus(TaskStatus.ToDO),
+                taskRepository.countByStatus(TaskStatus.Doing),
+                taskRepository.countByStatus(TaskStatus.Done),
+                taskRepository.getAveragePriority()
+        );
+    }
+
+    public Page<Task> findByNameContaining(String name, Pageable pageable) {
+        return taskRepository.findByNameContaining(name, pageable);
     }
 
 }
