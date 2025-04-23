@@ -1,0 +1,1 @@
+ALTER TABLE task ALTER COLUMN dueDate RENAME TO due_date;
