@@ -9,9 +9,7 @@ import task.manajer.domain.Task;
 import task.manajer.domain.TaskStatus;
 import task.manajer.dto.TaskStatsDTO;
 import task.manajer.repository.TaskRepository;
-
 import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
@@ -72,4 +70,6 @@ class TaskServiceTest {
         // Act & Assert
         assertThrows(RuntimeException.class, () -> taskService.getById(999L));
     }
+
+
 }

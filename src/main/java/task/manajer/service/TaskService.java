@@ -72,4 +72,9 @@ public class TaskService {
         return taskRepository.findByNameContaining(name, pageable);
     }
 
+    public void deleteTask(Long id) {
+        Task task = getById(id);
+        taskRepository.delete(task);
+    }
+
 }
